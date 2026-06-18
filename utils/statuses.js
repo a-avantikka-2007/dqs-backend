@@ -1,0 +1,4 @@
+module.exports = Object.freeze({
+  APPOINTMENT: ["PENDING", "APPROVED", "REJECTED", "COMPLETED", "CANCELLED"],
+  TOKEN: ["WAITING", "CALLED", "COMPLETED", "SKIPPED"]
+});
