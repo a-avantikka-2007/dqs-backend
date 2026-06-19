@@ -143,6 +143,25 @@ async function updateAppointmentStatus(req, res, next) {
       type = "APPOINTMENT_APPROVED";
       message = `Approved. Your token is ${token.token_number}.`;
     }
+    if (status === "COMPLETED") {
+       const tokens = await tokenModel.listTokens({
+         userId: appointment.user_id });
+      const tokenToComplete = tokens.find(
+      t => t.appointment_id === appointment.id );
+
+     if (tokenToComplete) {
+       await tokenModel.updateStatus(
+         tokenToComplete.id,
+          "COMPLETED"
+       );
+     }
+
+     title = "Appointment completed";
+
+     type = "APPOINTMENT_COMPLETED";
+
+     message = `Your ${appointment.department_name} appointment is completed.`;
+     }
 
     await createNotification({
       user_id: appointment.user_id,
